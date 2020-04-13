@@ -41,9 +41,7 @@ def reply():
 
 
 def search():
-    # this is to prevent bot detection
-    phrase = 0
-
+    global phrase
     # Retrieve the last seen tweet's ID
     lastNice = retrieve(niceFileName)
 
@@ -66,10 +64,10 @@ def search():
         elif(phrase == 1):
             api.update_status('@' + nice.user.screen_name +
             ' Since 13/04/2020, there has been ' + str(numberNices - 1) +
-            '. Yours was ' + str(numberNices) + '. Nice!', nice.id)
+            ' nice hashtags. Yours was ' + str(numberNices) + '. Nice!', nice.id)
         elif(phrase == 2):
             api.update_status('@' + nice.user.screen_name +
-            ' With your nice hashtag, the number of nices said ince 13/04/2020 has inscreased to ' +
+            ' With your nice hashtag, the number of nices said since 13/04/2020 has increased to ' +
             str(numberNices) + '. Nice!', nice.id)
 
         numberNices = numberNices + 1
@@ -94,6 +92,10 @@ accessSecret = 'YkdQU8bGgP2DXLYU0A2FJToIiVvaO5qb3Z55NSVabdp1a'
 auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
 auth.set_access_token(accessKey, accessSecret)
 api = tweepy.API(auth)
+
+# This is to prevent bot detection
+global phrase
+phrase = 0
 
 # Infinite loop, always responding (40 in 40 seconds)
 while True:
