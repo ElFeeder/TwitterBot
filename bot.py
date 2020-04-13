@@ -60,14 +60,14 @@ def search():
         if(phrase == 0):
             api.update_status('@' + nice.user.screen_name +
             ' Your nice hashtag was the ' + str(numberNices) +
-            'th since 13/04/2020! Nice!', nice.id)
+            'th since 13/04/2020 13:08! Nice!', nice.id)
         elif(phrase == 1):
             api.update_status('@' + nice.user.screen_name +
-            ' Since 13/04/2020, there has been ' + str(numberNices - 1) +
+            ' Since 13/04/2020 13:08, there has been ' + str(numberNices - 1) +
             ' nice hashtags. Yours was ' + str(numberNices) + '. Nice!', nice.id)
         elif(phrase == 2):
             api.update_status('@' + nice.user.screen_name +
-            ' With your nice hashtag, the number of nices said since 13/04/2020 has increased to ' +
+            ' With your nice hashtag, the number of nices said since 13/04/2020 13:08 has increased to ' +
             str(numberNices) + '. Nice!', nice.id)
 
         numberNices = numberNices + 1
