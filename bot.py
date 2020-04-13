@@ -53,7 +53,7 @@ def search():
     # Reverse to see first the older tweets
     for nice in reversed(nices):
         print('Found #nice: ' + nice.text + '\n\tID: ' + str(nice.id)
-            + '\nResponding...')
+            + '\n\tUsername: ' + nice.user.screen_name + '\nResponding...')
         lastNice = nice.id
         store(lastNice, niceFileName)
 
