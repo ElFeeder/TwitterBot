@@ -33,7 +33,8 @@ def reply():
         storeID(lastID, fileName)
         if('drena' in mention.text.lower()):
             print('found drena, responding')
-            api.update_status('@' + mention.user.screen_name + ' é isso', mention.id)
+            api.update_status('@' + mention.user.screen_name + ' That\'s the spirit!',
+                mention.id)
         
         print('\n')
 
