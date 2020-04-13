@@ -1,0 +1,5 @@
+twitter:
+API key - ux2xvOZ7cBc1vIGZSthjhw0KW
+API secret key - wZhFMH4zn1OjjERpkS1DW3FTGrf6ijWgIwBylP0p8oNHZYwP8K
+access token - 1249442524873146369-YGJLKzvqW4sNFpBcd8q87Du3kqa4V8
+access token secret - 7jschEQbz3TSp4wlm2RkFVivwjWllWPQWiwSJJ9rPZpSj
