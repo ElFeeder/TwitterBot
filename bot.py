@@ -97,12 +97,12 @@ api = tweepy.API(auth)
 global phrase
 phrase = 0
 
-# Infinite loop, always responding (40 in 40 seconds)
+# Infinite loop, always responding
 while True:
     #print('Checking for mentions...')
     #reply()
 
     print('Checking for #nice...')
     search()
-    print('Waiting 40 seconds')
+    print('Waiting 60 seconds')
     time.sleep(40)
