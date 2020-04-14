@@ -1,3 +1,4 @@
+# Python3
 import tweepy
 import time
 
@@ -105,4 +106,4 @@ while True:
     print('Checking for #nice...')
     search()
     print('Waiting 60 seconds')
-    time.sleep(40)
+    time.sleep(60)
