@@ -1,4 +1,3 @@
-# Python3
 import tweepy
 import time
 
@@ -18,31 +17,9 @@ def store(ID, fileName):
     return
 
 
-def reply():
-    # Retrieve the last seen tweet's ID
-    lastID = retrieve(mentionsFileName)
-
-    #Uncomment next line for testing purposes
-    #lastID = 1249479111891914752
-
-    # Stores all mentions of user
-    mentions = api.mentions_timeline(lastID)
-
-    # Reverse to see first the older tweets
-    for mention in reversed(mentions):
-        print('Found mention: ' +  mention.text + '\n\tID: ' + str(mention.id))
-        lastID = mention.id
-        store(lastID, mentionsFileName)
-        if('drena' in mention.text.lower()):
-            print('found drena, responding')
-            api.update_status('@' + mention.user.screen_name + ' That\'s the spirit!',
-                mention.id)
-        
-        print('\n')
-
-
 def search():
     global phrase
+
     # Retrieve the last seen tweet's ID
     lastNice = retrieve(niceFileName)
 
@@ -55,9 +32,14 @@ def search():
     for nice in reversed(nices):
         print('Found #nice: ' + nice.text + '\n\tID: ' + str(nice.id)
             + '\n\tUsername: ' + nice.user.screen_name + '\nResponding...')
+
         lastNice = nice.id
         store(lastNice, niceFileName)
 
+        # This is here because of bot prevention
+        numberNices = numberNices + 1
+        store(numberNices, niceCountFileName)
+		
         if(phrase == 0):
             api.update_status('@' + nice.user.screen_name +
             ' Your nice hashtag was the ' + str(numberNices) +
@@ -71,13 +53,11 @@ def search():
             ' With your nice hashtag, the number of nices said since 13/04/2020 13:08 has increased to ' +
             str(numberNices) + '. Nice!', nice.id)
 
-        numberNices = numberNices + 1
         phrase = phrase + 1
         if(phrase == 3):
             phrase = 0
 
         print('\n')
-    store(numberNices, niceCountFileName)
 
 
 mentionsFileName = 'MentionsID.txt'
@@ -100,9 +80,6 @@ phrase = 0
 
 # Infinite loop, always responding
 while True:
-    #print('Checking for mentions...')
-    #reply()
-
     print('Checking for #nice...')
     search()
     print('Waiting 60 seconds')
