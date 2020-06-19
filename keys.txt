@@ -1,5 +1,5 @@
 twitter:
-API key - ux2xvOZ7cBc1vIGZSthjhw0KW
-API secret key - wZhFMH4zn1OjjERpkS1DW3FTGrf6ijWgIwBylP0p8oNHZYwP8K
-access token - 1249442524873146369-Zfpo4dTW6qr0o5H3wROuFywhtfZeSF
-access token secret - YkdQU8bGgP2DXLYU0A2FJToIiVvaO5qb3Z55NSVabdp1a
+API key - lXp04hHaxBiWFcV4D3HHDV2kb
+API secret key - 0z68Oa4mZolfir68NPaPck9FFtFl3Pe0wykQ24H74YzN3jLhKQ
+access token - 1249442524873146369-J7VLbZeUMLaMGbUgObL4MYi9gL6Zps
+access token secret - dxnw9vpDG8nzIhZVOCOxgUdyyXXOFZy2BfoADTWegZcJg
