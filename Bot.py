@@ -1,7 +1,8 @@
-# Python3
 import tweepy
 import time
+import os
 
+from dotenv import load_dotenv
 
 
 def retrieve(fileName):
@@ -20,24 +21,20 @@ def store(ID, fileName):
 
 def search():
     global phrase
-    # Retrieve the last seen tweet's ID
-    lastNice = retrieve(niceFileName)
 
-    # Retrieve number of nices to this point
-    numberNices = retrieve(niceCountFileName)
+    lastNice = retrieve(niceFileName)           # Retrieve last seen tweet's ID
+    numberNices = retrieve(niceCountFileName)   # Retrieve number of nices
 
     nices = api.search(q = '#nice', since_id = lastNice)
 
-
     try:
-        # Reverse to see first the older tweets
-        for nice in reversed(nices):
+        for nice in reversed(nices):    # Reverse to see first the older tweets
             print('Found #nice: ' + nice.text + '\n\tID: ' + str(nice.id)
                   + '\n\tUsername: ' + nice.user.screen_name + '\nResponding...')
             lastNice = nice.id
-            store(lastNice, niceFileName)
 
-            # This is here because of bot prevention
+            # Storing now because it's safer
+            store(lastNice, niceFileName)
             numberNices = numberNices + 1
             store(numberNices, niceCountFileName)
 
@@ -60,30 +57,33 @@ def search():
 
             print('\n')
     except:
-        print("Error found, waiting 15m")
-        time.sleep(60*14)   #14m plus the 1 in the infinte loop
+        print("Error found, code = " + str(tweepy.TweepError))
+        if(str(tweepy.TweepError) == 385):  # 385 is "Deleted tweet"
+            print("Can continue")
+        else:
+            print("Waiting 20m...")
+            time.sleep(60*19)               #19m plus the 1 in the infinite loop
 
 
-mentionsFileName = 'MentionsID.txt'
 niceFileName = 'NiceID.txt'
 niceCountFileName = 'NiceCount.txt'
 
-# You can find these keys in twitter developer
-consumerKey = 'P3PbJ3qBM8LOBU5L4pnjKotsM'
-consumerSecret = 'xLGrQH2j7OjLZXKwHczupL8IdPlVq1vAUOww4RxJXax6P93GQy'
-accessKey = '1249442524873146369-GQ5DTDYTMqY99muNrbPycXsBX6lTS0'
-accessSecret = 'KtQp1Ez1X5uc6kmM16qXXwnSUxl3lHBRonVVIL9TXTMp7'
+load_dotenv(encoding = "utf8")
 
-auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
-auth.set_access_token(accessKey, accessSecret)
+# You can find these keys in twitter developer
+APIKey = os.getenv("API_KEY")
+APISecret = os.getenv("API_SECRET_KEY")
+accessToken = os.getenv("ACCESS_TOKEN")
+accessSecret = os.getenv("ACCESS_TOKEN_SECRET")
+
+auth = tweepy.OAuthHandler(APIKey, APISecret)
+auth.set_access_token(accessToken, accessSecret)
 api = tweepy.API(auth)
 
-# This is to prevent bot detection
-global phrase
+global phrase   # Prevent bot detection
 phrase = 0
 
-# Infinite loop, always responding
-while True:
+while True:     # Infinite loop, always responding
     print('Checking for #nice...')
     search()
     print('Waiting 60 seconds')

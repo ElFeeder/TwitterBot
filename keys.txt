@@ -1,5 +1,0 @@
-twitter:
-API key - P3PbJ3qBM8LOBU5L4pnjKotsM
-API secret key - xLGrQH2j7OjLZXKwHczupL8IdPlVq1vAUOww4RxJXax6P93GQy
-access token - 1249442524873146369-GQ5DTDYTMqY99muNrbPycXsBX6lTS0
-access token secret - KtQp1Ez1X5uc6kmM16qXXwnSUxl3lHBRonVVIL9TXTMp7
