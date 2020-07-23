@@ -40,7 +40,7 @@ def search():
             # This is here because of bot prevention
             numberNices = numberNices + 1
             store(numberNices, niceCountFileName)
-                
+
             if(phrase == 0):
                 api.update_status('@' + nice.user.screen_name +
                 ' Your nice hashtag was the ' + str(numberNices) +
@@ -60,8 +60,8 @@ def search():
 
             print('\n')
     except:
-        print("Error found, waiting 30m")
-        time.sleep(60*29)   #29m plus the 1 in the infinte loop
+        print("Error found, waiting 15m")
+        time.sleep(60*14)   #14m plus the 1 in the infinte loop
 
 
 mentionsFileName = 'MentionsID.txt'
@@ -69,10 +69,10 @@ niceFileName = 'NiceID.txt'
 niceCountFileName = 'NiceCount.txt'
 
 # You can find these keys in twitter developer
-consumerKey = 'lXp04hHaxBiWFcV4D3HHDV2kb'
-consumerSecret = '0z68Oa4mZolfir68NPaPck9FFtFl3Pe0wykQ24H74YzN3jLhKQ'
-accessKey = '1249442524873146369-J7VLbZeUMLaMGbUgObL4MYi9gL6Zps'
-accessSecret = 'dxnw9vpDG8nzIhZVOCOxgUdyyXXOFZy2BfoADTWegZcJg'
+consumerKey = 'P3PbJ3qBM8LOBU5L4pnjKotsM'
+consumerSecret = 'xLGrQH2j7OjLZXKwHczupL8IdPlVq1vAUOww4RxJXax6P93GQy'
+accessKey = '1249442524873146369-GQ5DTDYTMqY99muNrbPycXsBX6lTS0'
+accessSecret = 'KtQp1Ez1X5uc6kmM16qXXwnSUxl3lHBRonVVIL9TXTMp7'
 
 auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
 auth.set_access_token(accessKey, accessSecret)
