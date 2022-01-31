@@ -1,8 +1,9 @@
 import tweepy
 import time
-import os
+#import os
+import random
 
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
 
 def retrieve(fileName):
@@ -25,7 +26,7 @@ def search():
     lastNice = retrieve(niceFileName)           # Retrieve last seen tweet's ID
     numberNices = retrieve(niceCountFileName)   # Retrieve number of nices
 
-    nices = api.search(q = '#nice', since_id = lastNice)
+    nices = api.search_tweets(q = '#nice -filter:retweets', since_id = lastNice)
 
     try:
         for nice in reversed(nices):    # Reverse to see first the older tweets
@@ -38,50 +39,55 @@ def search():
             numberNices = numberNices + 1
             store(numberNices, niceCountFileName)
 
-            if(phrase == 0):
-                api.update_status('@' + nice.user.screen_name +
-                ' Your nice hashtag was the ' + str(numberNices) +
-                'th since 13/04/2020 13:08! Nice!', nice.id)
-            elif(phrase == 1):
-                api.update_status('@' + nice.user.screen_name +
-                ' Since 13/04/2020 13:08, there has been ' + str(numberNices - 1) +
-                ' nice hashtags. Yours was ' + str(numberNices) + '. Nice!', nice.id)
-            elif(phrase == 2):
-                api.update_status('@' + nice.user.screen_name +
-                ' With your nice hashtag, the number of nices said since 13/04/2020 13:08 has increased to ' +
-                str(numberNices) + '. Nice!', nice.id)
+            phrase = random.randint(0, 3)   # Prevent bot detection
 
-            phrase = phrase + 1
-            if(phrase == 3):
-                phrase = 0
+            if(phrase == 0):
+                api.update_status(status = '@' + nice.user.screen_name +
+                ' Your nice hashtag was number ' + str(numberNices) +
+                ' since 28/01/2022! Nice!', in_reply_to_status_id = nice.id)
+            elif(phrase == 1):
+                api.update_status(status = '@' + nice.user.screen_name +
+                ' Since 28/01/2022, there have been ' + str(numberNices - 1) +
+                ' nice hashtags. Yours was number ' + str(numberNices) + '. Nice!', in_reply_to_status_id = nice.id)
+            elif(phrase == 2):
+                api.update_status(status = '@' + nice.user.screen_name +
+                ' With your nice hashtag, the number of nices said since 28/01/2022 has increased to ' +
+                str(numberNices) + '. Nice!', in_reply_to_status_id = nice.id)
+            elif(phrase == 3):
+                api.update_status(status = '@' + nice.user.screen_name +
+                ' Before you, ' + str(numberNices - 1) + ' people tweeted a nice hashtag. Now there are ' +
+                str(numberNices) + ' nice hashtags in Twitter. Nice!', in_reply_to_status_id =  nice.id)
+            elif(phrase == 4):
+                api.update_status(status = '@' + nice.user.screen_name +
+                ' Thank you for being Nice! Since 28/01/2022, ' + str(numberNices - 1) + ' people tweeted a nice hashtag. Including you, that\'s ' +
+                str(numberNices) + ' nice hashtags!', in_reply_to_status_id =  nice.id)
 
             print('\n')
     except:
-        print("Error found, code = " + str(tweepy.TweepError))
-        if(str(tweepy.TweepError) == 385):  # 385 is "Deleted tweet"
+        numberNices = numberNices - 1
+        print("Error found, code = " + str(tweepy.TweepyException))
+        if(str(tweepy.TweepyException) == "385"):  # 385 is "Deleted tweet"
             print("Can continue")
         else:
-            print("Waiting 20m...")
-            time.sleep(60*19)               #19m plus the 1 in the infinite loop
+            print("Waiting 20m...")         # Maybe bot detection
+            time.sleep(60*19)               # 19m plus the 1 in the infinite loop
 
 
 niceFileName = 'NiceID.txt'
 niceCountFileName = 'NiceCount.txt'
 
-load_dotenv(encoding = "utf8")
+#load_dotenv(encoding = "utf8")
 
 # You can find these keys in twitter developer
-APIKey = os.getenv("API_KEY")
-APISecret = os.getenv("API_SECRET_KEY")
-accessToken = os.getenv("ACCESS_TOKEN")
-accessSecret = os.getenv("ACCESS_TOKEN_SECRET")
+# Ye this should be in and .env but Windows sucks
+APIKey = "6dEsiehLbX7kQUZvysRA169IF"
+APISecret = "9HyxU5eeQnKOzlpOkRF1AC7H6XZvzAuHWWY9jBM6OIjv9u2aeN"
+accessToken = "1249442524873146369-kUvmjcHsK5yJKOcnm3ikonbkgVB9gF"
+accessSecret = "BorvGN4C85u0OMYDdZ4GSEQIb1O9THfOlXn3KdljDUIVL"
 
 auth = tweepy.OAuthHandler(APIKey, APISecret)
 auth.set_access_token(accessToken, accessSecret)
 api = tweepy.API(auth)
-
-global phrase   # Prevent bot detection
-phrase = 0
 
 while True:     # Infinite loop, always responding
     print('Checking for #nice...')
